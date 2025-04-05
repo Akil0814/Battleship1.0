@@ -2,8 +2,11 @@
 #include"scene.h"
 
 extern Scene* menu_scene;
-extern Scene* game_scene;
 extern Scene* setting_scene;
+extern Scene* Local_PVP_scene;
+extern Scene* Local_PVP_Setup_scene;
+//extern Scene* PVE_scene;
+//extern Scene* Online_PVP_scene;
 
 
 class SceneManager
@@ -13,7 +16,10 @@ public:
 	{
 		Menu,
 		Setting,
-		Game
+		Local_PVP,
+		Local_PVP_Setup,
+		//PVE,
+		//Online_PVP,
 	};
 
 public:
@@ -36,9 +42,12 @@ public:
 			break;
 		case SceneType::Setting:
 			current_scene = setting_scene;
-		case SceneType::Game:
-			current_scene = game_scene;
-
+			break;
+		case SceneType::Local_PVP:
+			current_scene = Local_PVP_scene;
+			break;
+		case SceneType::Local_PVP_Setup:
+			current_scene = Local_PVP_Setup_scene;
 			break;
 		default:
 			break;
@@ -62,6 +71,5 @@ public:
 	}
 
 private:
-
 	Scene* current_scene = nullptr;
 };

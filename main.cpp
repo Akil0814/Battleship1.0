@@ -20,8 +20,12 @@ IMAGE Menu_Setting_Hovered;
 IMAGE Menu_Setting_Pushed;
 
 Scene* menu_scene = nullptr;
-Scene* game_scene = nullptr;
+Scene* Local_PVP_scene = nullptr;
+Scene* Local_PVP_Setup_scene=nullptr;
 Scene* setting_scene = nullptr;
+//Scene* PVE_scene = nullptr;
+//Scene* Online_PVP_scene = nullptr;
+
 
 SceneManager scene_manager;
 
@@ -49,7 +53,8 @@ int main()
 	BeginBatchDraw();
 
 	menu_scene = new MenuScene();
-	game_scene = new GameScene();
+	//Local_PVP_scene =new LocalPVPScene();
+	//Local_PVP_Setup_scene=new LocalPVPScene();
 
 	scene_manager.set_current_scene(menu_scene);
 

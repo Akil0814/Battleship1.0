@@ -30,12 +30,11 @@ public:
 
 	void on_update()
 	{
-		if (PVP.cheek_is_clicked())
-			scene_manager.switch_to(SceneManager::SceneType::Game);
-		if (PVE.cheek_is_clicked())
-			scene_manager.switch_to(SceneManager::SceneType::Game);
 		if (setting.cheek_is_clicked())
 			scene_manager.switch_to(SceneManager::SceneType::Setting);
+		if (LocalPVP.cheek_is_clicked())
+			scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
+
 	}
 
 	void on_draw()
@@ -46,9 +45,7 @@ public:
 
 	void on_input(const ExMessage& msg)
 	{
-		PVE.process_event(msg);
-		PVP.process_event(msg);
-		setting.process_event(msg);
+		LocalPVP.process_event(msg);
 	}
 
 	void on_exit()
@@ -60,7 +57,8 @@ private:
 
 	Button setting;
 	Button PVE;
-	Button PVP;
+	Button LocalPVP;
+	Button OnlinePVP;
 
 	int space_between_button = 10;
 	bool is_click = false;
