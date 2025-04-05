@@ -41,11 +41,14 @@
     <ClInclude Include="ship.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Board.h">
+    <ClInclude Include="board.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="player.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="local_PVP_setup_scene.h">
+      <Filter>头文件\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,8 +18,6 @@ public:
 		Setting,
 		Local_PVP,
 		Local_PVP_Setup,
-		//PVE,
-		//Online_PVP,
 	};
 
 public:

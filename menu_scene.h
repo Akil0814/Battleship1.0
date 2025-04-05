@@ -4,9 +4,9 @@
 #include"button.h"
 
 extern IMAGE Menu_background;
-extern IMAGE Menu_Start_Idle;
-extern IMAGE Menu_Start_Hovered;
-extern IMAGE Menu_Start_Pushed;
+extern IMAGE Menu_Local_PVP_Idle;
+extern IMAGE Menu_Local_PVP_Hovered;
+extern IMAGE Menu_Local_PVP_Pushed;
 extern IMAGE Menu_Setting_Idle;
 extern IMAGE Menu_Setting_Hovered;
 extern IMAGE Menu_Setting_Pushed;
@@ -26,21 +26,22 @@ public:
 		WINDOW_HEIGHT = Menu_background.getheight();
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+		LocalPVP.set_image(&Menu_Local_PVP_Idle, &Menu_Local_PVP_Hovered, &Menu_Local_PVP_Pushed);
+		LocalPVP.set_top((WINDOW_HEIGHT - LocalPVP.get_button_height()) / 2);
+		LocalPVP.set_left((WINDOW_WIDTH - LocalPVP.get_button_width()) / 2);
+
 	}
 
 	void on_update()
 	{
-		if (setting.cheek_is_clicked())
-			scene_manager.switch_to(SceneManager::SceneType::Setting);
 		if (LocalPVP.cheek_is_clicked())
-			scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
-
+			scene_manager.switch_to(SceneManager::SceneType::Local_PVP_Setup);
 	}
 
 	void on_draw()
 	{
 		putimage(0, 0, &Menu_background);
-
+		LocalPVP.draw();
 	}
 
 	void on_input(const ExMessage& msg)
@@ -50,17 +51,14 @@ public:
 
 	void on_exit()
 	{
-
+		LocalPVP.reset_click();
 	}
 
 private:
 
 	Button setting;
-	Button PVE;
 	Button LocalPVP;
-	Button OnlinePVP;
 
 	int space_between_button = 10;
 	bool is_click = false;
-
 };

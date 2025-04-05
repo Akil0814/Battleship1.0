@@ -26,29 +26,13 @@ public:
 		region.right = region.left + img_idle->getwidth();
 	}
 
-	void set_hold()
-	{
-		will_hold = true;
-	}
-
 	void reset_click()
 	{
 		is_clicked = false;
 	}
 
-	void reset_hold()
-	{
-		will_hold=false;
-	}
-
 	void draw()
 	{
-		if (will_hold)
-		{
-			putimage(region.left, region.top, img_pushed);
-			return;
-		}
-
 		switch (status)
 		{
 		case Status::Idle:
@@ -84,8 +68,7 @@ public:
 			if (status == Status::Pushed)
 			{
 				is_clicked = true;
-				if(!will_hold)
-					status = Status::Idle;
+				status = Status::Idle;
 			}
 			break;
 		default:
@@ -103,10 +86,6 @@ public:
 		return is_clicked;
 	}
 
-	bool cheek_hold()const
-	{
-		return will_hold;
-	}
 
 	int get_button_width()const
 	{
@@ -140,7 +119,6 @@ private:
 private:
 
 	bool is_clicked = false;
-	bool will_hold = false;
 
 	RECT region={0,0,0,0};
 	IMAGE* img_idle=nullptr;
