@@ -23,9 +23,14 @@ IMAGE Menu_Setting_Idle;
 IMAGE Menu_Setting_Hovered;
 IMAGE Menu_Setting_Pushed;
 
+IMAGE Restart_Idle;
+IMAGE Restart_Hovered;
+IMAGE Restart_Pushed;
+
 IMAGE Bar;
 IMAGE Base;
 
+IMAGE Ship_img[5];
 
 Scene* menu_scene = nullptr;
 Scene* Local_PVP_scene = nullptr;
@@ -45,6 +50,12 @@ void LoadResource()
 	loadimage(&Bar, _T("res/Bar.png"));
 	loadimage(&Base, _T("res/Base.png"));
 
+	loadimage(&Ship_img[0], _T("res/Ship1.png"));
+	loadimage(&Ship_img[1], _T("res/Ship2.png"));
+	loadimage(&Ship_img[2], _T("res/Ship3.png"));
+	loadimage(&Ship_img[3], _T("res/Ship4.png"));
+	loadimage(&Ship_img[4], _T("res/Ship5.png"));
+
 	loadimage(&Menu_Setting_Idle, _T("res/Menu_Setting_Idle.png"));
 	loadimage(&Menu_Setting_Hovered, _T("res/Menu_Setting_Hovered.png"));
 	loadimage(&Menu_Setting_Pushed, _T("res/Menu_Setting_Pushed.png"));
@@ -52,12 +63,15 @@ void LoadResource()
 	loadimage(&Menu_Local_PVP_Idle, _T("res/Menu_Local_PVP_Idle.png"));
 	loadimage(&Menu_Local_PVP_Pushed, _T("res/Menu_Local_PVP_Pushed.png"));
 
+	loadimage(&Restart_Idle, _T("res/Restart_Idle.png"));
+	loadimage(&Restart_Hovered, _T("res/Restart_Hovered.png"));
+	loadimage(&Restart_Pushed, _T("res/Restart_Pushed.png"));
 }
 
 
 int main()
 {
-	constexpr int FPS = 30;
+	constexpr int FPS = 60;
 
 	srand((unsigned int)time(NULL));
 

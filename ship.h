@@ -1,16 +1,16 @@
 #pragma once
 #include<graphics.h>
+#define PI 3.14159265359
 
 class Ship
 {
 public:
-	Ship()
-	{
+	Ship(){}
+	~Ship(){}
 
-	}
-	~Ship()
+	void rotate_ship()
 	{
-
+		rotateimage(img,img,PI / 2,WHITE,true,true);
 	}
 
 	bool check_cursor_hit(int x, int y)const
@@ -26,12 +26,20 @@ public:
 	void set_top(int x)
 	{
 		region.top = x;
+		ship_pos_x = x;
 		region.bottom = region.top + img->getheight();
 	}
 
 	void set_left(int y)
 	{
 		region.left = y;
+		ship_pos_y = y;
+		region.right = region.left + img->getwidth();
+	}
+
+	void update_pos()
+	{
+		region.bottom = region.top + img->getheight();
 		region.right = region.left + img->getwidth();
 	}
 
@@ -40,24 +48,28 @@ public:
 		putimage(region.left, region.top, img);
 	}
 
-	int get_ship_img_width()const
+	void place_ship()
 	{
-		return img->getwidth();
+		ship_pos_index_x = region.top / size_of_base;
+		if (region.top % size_of_base > size_of_base / 2)
+			ship_pos_index_x++;
+
+		ship_pos_index_y = region.left / size_of_base;
+		if (region.left % size_of_base > size_of_base / 2)
+			ship_pos_index_y++;
+
+		region.top = ship_pos_index_x * size_of_base;
+		region.left = ship_pos_index_y * size_of_base;
 	}
 
-	int get_ship_img_height()const
+	int get_ship_pos_index_x()const
 	{
-		return img->getheight();
+		return ship_pos_index_x;
 	}
 
-	int get_ship_in_game_width()const
+	int get_ship_pos_index_y()const
 	{
-		return img->getwidth()/ size_of_base;
-	}
-
-	int get_ship_in_game_height()const
-	{
-		return img->getheight()/ size_of_base;
+		return ship_pos_index_y;
 	}
 
 	int cheek_top() const
@@ -70,8 +82,20 @@ public:
 		return region.left;
 	}
 
+
 private:
 	int size_of_base=50;
+
+	int ship_pos_x =0;
+	int ship_pos_y = 0;
+
+	int ship_pos_index_x =0;
+	int ship_pos_index_y = 0;
+
+	int ship_pos_index_x_memory = 0;
+	int ship_pos_index_y_memory = 0;
+
+
 	RECT region = { 0,0,0,0 };
 	IMAGE* img = nullptr;
 
