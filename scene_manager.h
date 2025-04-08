@@ -6,7 +6,10 @@ extern Scene* setting_scene;
 extern Scene* Local_PVP_scene;
 extern Scene* Local_PVP_Setup_scene;
 //extern Scene* PVE_scene;
+//extern Scene* PVE_Setup_scene;
 //extern Scene* Online_PVP_scene;
+//extern Scene* Online_PVP_Setup_scene;
+
 
 
 class SceneManager
@@ -16,6 +19,10 @@ public:
 	{
 		Menu,
 		Setting,
+		PVE,
+		PVE_Setup,
+		Online_PVP,
+		Online_PVP_Setup,
 		Local_PVP,
 		Local_PVP_Setup,
 	};

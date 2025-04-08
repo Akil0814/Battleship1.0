@@ -73,8 +73,8 @@ class LocalPVPSetupScene :public Scene
 			if (current_player->current_ship->check_cursor_hit(msg_x, msg_y))
 			{
 				move_current_ship = true;
-				dx = msg_x - current_player->current_ship->cheek_left();
-				dy = msg_y - current_player->current_ship->cheek_top();
+				dx = msg_x - current_player->current_ship->get_left();
+				dy = msg_y - current_player->current_ship->get_top();
 			}
 		}
 
