@@ -26,9 +26,7 @@ class LocalPVPSetupScene :public Scene
 		WINDOW_HEIGHT = P1.board.get_height() + Bar.getheight();
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		next.set_image(&Restart_Idle, &Restart_Hovered, &Restart_Pushed);
-		next.set_left(WINDOW_WIDTH - next.get_button_width() - space_between_button);
-		next.set_top(WINDOW_HEIGHT - next.get_button_height() - space_between_button);
+
 
 		P1.board.set_board();
 		P2.board.set_board();
@@ -39,8 +37,6 @@ class LocalPVPSetupScene :public Scene
 
 	void on_update()
 	{
-		if (next.cheek_is_clicked())
-			current_player = &P2;
 
 		if (move_current_ship)
 		{
@@ -60,7 +56,7 @@ class LocalPVPSetupScene :public Scene
 		current_player->board.draw_player_board();
 		current_player->draw_all_ship();
 		putimage(0, P1.board.get_height(),& Bar);
-		next.draw();
+
 	}
 
 	void on_input(const ExMessage& msg)
@@ -68,7 +64,6 @@ class LocalPVPSetupScene :public Scene
 		msg_x = msg.x;
 		msg_y = msg.y;
 
-		next.process_event(msg);
 
 		if(!move_current_ship)
 		current_player->get_current_ship(msg_x, msg_y);
@@ -99,11 +94,11 @@ class LocalPVPSetupScene :public Scene
 
 	void on_exit()
 	{
-		next.reset_click();
+
 	}
 
 private:
-	Button next;
+
 
 	int timer_for_test = 0;/////////////////////////////////////////////////test code
 

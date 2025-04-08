@@ -5,12 +5,6 @@
 
 using namespace std;
 
-extern IMAGE Ship1_img;
-extern IMAGE Ship2_img;
-extern IMAGE Ship3_img;
-extern IMAGE Ship4_img;
-extern IMAGE Ship5_img;
-
 extern IMAGE Ship_img[5];
 
 class Player
@@ -70,6 +64,7 @@ private:
 	Ship ship4;
 	Ship ship5;
 	vector<Ship>ship_list;
+
 	bool is_win = false;
 	int ship_grid_have = 12;
 };
