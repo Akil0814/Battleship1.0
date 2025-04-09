@@ -6,9 +6,12 @@
 #include"button.h"
 
 extern SceneManager scene_manager;
+extern Scene* menu_scene;
+
 extern Player* current_player;
 extern Player P1;
 extern Player P2;
+extern Player Computer;
 
 extern IMAGE Bar;
 extern IMAGE Restart_Idle;
@@ -16,23 +19,35 @@ extern IMAGE Restart_Hovered;
 extern IMAGE Restart_Pushed;
 
 
-class LocalPVPSetupScene :public Scene
+class SetupScene :public Scene
 {
+public:
+	explicit SetupScene(SceneManager::SceneType target_type) : target_scene(target_type){}
+
 	void on_enter()
 	{
 		current_player = &P1;
+		P1.board.set_board();
+		P1.set_ship_img();
 
 		WINDOW_WIDTH = P1.board.get_width();
 		WINDOW_HEIGHT = P1.board.get_height() + Bar.getheight();
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
-
-
-
-		P1.board.set_board();
-		P2.board.set_board();
-		P1.set_ship_img();
-		P2.set_ship_img();
-
+		switch (target_scene)
+		{
+		case SceneManager::SceneType::PVE:
+			Computer.board.set_board();
+			Computer.set_ship_img();
+			break;
+		case SceneManager::SceneType::Online_PVP:
+			break;
+		case SceneManager::SceneType::Local_PVP:
+			P2.board.set_board();
+			P2.set_ship_img();
+			break;
+		default:
+			break;
+		}
 	}
 
 	void on_update()
@@ -45,15 +60,32 @@ class LocalPVPSetupScene :public Scene
 		}
 		if (rotate_current_ship)
 		{
-			current_player->current_ship->rotate_ship();
-			current_player->current_ship->update_pos();
+			current_player->rotate_current_ship();
 			rotate_current_ship = false;
+		}
+		if (button_next.is_clicked_now())
+		{
+			switch (target_scene)
+			{
+			case SceneManager::SceneType::PVE:
+				scene_manager.switch_to(SceneManager::SceneType::PVE);
+				break;
+			case SceneManager::SceneType::Online_PVP:
+				break;
+			case SceneManager::SceneType::Local_PVP:
+				if(current_player==&P2)
+					scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
+				current_player = &P2;
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
 	void on_draw()
 	{
-		current_player->board.draw_player_board();
+		current_player->board.draw_setup_board();
 		current_player->draw_all_ship();
 		putimage(0, P1.board.get_height(),& Bar);
 
@@ -91,16 +123,15 @@ class LocalPVPSetupScene :public Scene
 		}
 	}
 
-
 	void on_exit()
 	{
 
 	}
 
 private:
+	Button button_next;
 
-
-	int timer_for_test = 0;/////////////////////////////////////////////////test code
+	SceneManager::SceneType target_scene;
 
 	int space_between_button = 10;
 

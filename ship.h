@@ -24,20 +24,6 @@ public:
 		current_img = original_img;
 	}
 
-	void draw()
-	{
-		putimage(region.left, region.top, current_img);
-	}
-
-	void rotate_ship()
-	{
-		is_horizontal = !is_horizontal;
-
-		is_horizontal ? current_img = original_img : current_img = rotate_img;
-
-		update_pos();
-	}
-
 	void set_pos(int x, int y)
 	{
 		region.left = x;
@@ -50,13 +36,21 @@ public:
 		update_pos();
 	}
 
-	void update_pos()
+	void rotate_ship()
 	{
-		region.bottom = region.top + current_img->getheight();
-		region.right = region.left + current_img->getwidth();
+		is_horizontal = !is_horizontal;
+
+		is_horizontal ? current_img = original_img : current_img = rotate_img;
+
+		update_pos();
 	}
 
-	void place_ship()
+	void draw()
+	{
+		putimage(region.left, region.top, current_img);
+	}
+
+	void place_ship()//
 	{
 		ship_pos_index_x = region.top / size_of_base;
 		if (region.top % size_of_base > size_of_base / 2)
@@ -98,6 +92,14 @@ public:
 	{
 		return x >= region.left && x <= region.right 
 			&& y >= region.top && y <= region.bottom;
+	}
+
+private:
+
+	void update_pos()
+	{
+		region.bottom = region.top + current_img->getheight();
+		region.right = region.left + current_img->getwidth();
 	}
 
 private:

@@ -5,10 +5,10 @@ using namespace std;
 #define IS_EMPTY 0
 #define IS_SHIP 1
 #define IS_CHEAKED 2
-#define IS_FIND 3
-#define IS_SHIP_HIT 4
+#define IS_HIT 3
 
 extern IMAGE Base;
+extern IMAGE Bar;
 
 class Board
 {
@@ -16,63 +16,107 @@ public:
 	Board() = default;
 	~Board() = default;
 
-	void draw_player_board()
+	void set_board()
+	{
+		board_see.assign(row, vector<int>(col, IS_EMPTY));
+		board_data.assign(row, vector<int>(col, IS_EMPTY));
+		board_height = row * base_width;
+		board_width = col * base_width;
+	}
+
+	void draw_setup_board()
 	{
 		for (int i = 0; i < row; i++)
 		{
 			for (int j = 0; j < col; j++)
 			{
-				
-				if (board_player_see[i][j] == IS_EMPTY)
+				putimage(j * base_width, i * base_width, &Base);
+			}
+		}
+	}
+
+	void draw_player_turn()
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				switch (board_see[i][j])
 				{
-					putimage(j * base_width, i * base_width, &Base);
+				case IS_EMPTY:
+					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					break;
+				case IS_CHEAKED:
+					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					break;
+				case IS_HIT:
+					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					break;
+				default:
+					break;
 				}
 			}
 		}
 	}
 
-
-	void set_board()
+	void draw_enemy_turn()
 	{
-		board_player_see.assign(row, vector<int>(col, IS_EMPTY));
-		board_enemy_see.assign(row, vector<int>(col, IS_EMPTY));
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				switch (board_see[i][j])
+				{
+				case IS_EMPTY:
+					putimage(j * base_width, i * base_width, &Base);
+					break;
+				case IS_CHEAKED:
+					putimage(j * base_width, i * base_width, &Base);
+					break;
+				case IS_HIT:
+					putimage(j * base_width, i * base_width, &Base);
+					break;
+				default:
+					break;
+				}
+			}
+		}
 	}
 
-	void set_rows(int s_row)
+	void check_hit(int x,int y)
 	{
-		row = s_row;
+		if (board_data[x][y] == IS_SHIP && board_see[x][y] == IS_EMPTY)
+		{
+			board_see[x][y] = IS_HIT;
+			board_data[x][y] = IS_HIT;
+		}
+		if (board_data[x][y] == IS_EMPTY && board_see[x][y] == IS_EMPTY)
+		{
+			board_see[x][y] = IS_CHEAKED;
+		}
 	}
 
-	void set_cols(int s_col)
-	{
-		col = s_col;
-	}
 
-	int cheek_col()const
-	{
-		return col;
-	}
-
-	int cheek_row()const
-	{
-		return row;
-	}
 
 	int get_width()const
 	{
-		return col* base_width;
+		return board_width;
 	}
 
 	int get_height()const
 	{
-		return row * base_width;
+		return board_height;
 	}
 
 private:
-	vector<vector<int>>board_player_see;
-	vector<vector<int>>board_enemy_see;
+	vector<vector<int>>board_see;
+	vector<vector<int>>board_data;
 
 	int row = 10;
 	int col = 10;
+
+	int board_height = 0;
+	int board_width= 0;
+
 	int base_width = 50;
 };

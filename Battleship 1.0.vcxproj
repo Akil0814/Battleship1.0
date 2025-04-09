@@ -133,7 +133,7 @@
     <ClInclude Include="board.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="game_scene.h" />
-    <ClInclude Include="local_PVP_setup_scene.h" />
+    <ClInclude Include="setup_scene.h" />
     <ClInclude Include="menu_scene.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="scene.h" />

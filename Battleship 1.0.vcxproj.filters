@@ -47,7 +47,7 @@
     <ClInclude Include="player.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="local_PVP_setup_scene.h">
+    <ClInclude Include="setup_scene.h">
       <Filter>头文件\Scene</Filter>
     </ClInclude>
   </ItemGroup>

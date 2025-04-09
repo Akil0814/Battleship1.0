@@ -24,7 +24,7 @@ public:
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		button_localPVP.set_images(&Menu_Local_PVP_Idle, &Menu_Local_PVP_Hovered, &Menu_Local_PVP_Pushed);
-		button_localPVP.set_position(200, 200);//tmp;
+		button_localPVP.set_position(100, 150);//tmp;
 
 	}
 
@@ -32,7 +32,6 @@ public:
 	{
 		if (button_localPVP.is_clicked_now())
 		{
-			std::cout << "按钮被点击，切换场景" << std::endl;
 			scene_manager.switch_to(SceneManager::SceneType::Setup);
 			button_localPVP.reset_click();
 		}
@@ -53,6 +52,7 @@ public:
 	{
 		button_localPVP.reset_click();
 	}
+
 
 private:
 

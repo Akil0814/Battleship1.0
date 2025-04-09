@@ -6,7 +6,7 @@
 #include"scene.h"
 #include"menu_scene.h"
 #include"game_scene.h"
-#include"local_PVP_setup_scene.h"
+#include"setup_scene.h"
 
 #include"button.h"
 #include"board.h"
@@ -34,15 +34,16 @@ IMAGE Ship_img[5];
 
 Scene* menu_scene = nullptr;
 Scene* setting_scene = nullptr;
-Scene* Setup_scene = nullptr;
+Scene* setup_scene = nullptr;
 Scene* PVE_scene = nullptr;
-Scene* Online_PVP_scene = nullptr;
-Scene* Local_PVP_scene = nullptr;
+Scene* online_PVP_scene = nullptr;
+Scene* local_PVP_scene = nullptr;
 
 SceneManager scene_manager;
 
 Player P1;
 Player P2;
+Player Computer;
 Player* current_player = nullptr;
 
 void LoadResource()
@@ -82,7 +83,7 @@ int main()
 	BeginBatchDraw();
 
 	menu_scene = new MenuScene();
-	Setup_scene=new LocalPVPSetupScene();
+	setup_scene= new SetupScene(SceneManager::SceneType::Local_PVP);
 
 	scene_manager.set_current_scene(menu_scene);
 

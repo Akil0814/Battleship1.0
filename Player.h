@@ -11,17 +11,22 @@ class Player
 {
 public:
 	Player() = default;
-	~Player() = default;
+	~Player()
+	{
+		delete_all_ship();
+	}
 
 	void set_ship_img()
 	{
+		delete_all_ship();
 		int def = 0;
-		ship_list = { ship1,ship2,ship3,ship4,ship5 };
-		for (int i = 0; i < ship_list.size(); i++)
+		for (int i = 0; i < num_of_ship; i++)
 		{
-			ship_list[i].set_image(&Ship_img[i]);
-			ship_list[i].set_pos(0, def);
+			Ship* new_ship =new Ship;
+			new_ship->set_image(&Ship_img[i]);
+			new_ship->set_pos(0, def);
 			def += 50;
+			ship_list.push_back(new_ship);
 		}
 	}
 	
@@ -29,42 +34,49 @@ public:
 	{
 		for (int i = 0; i < ship_list.size(); i++)
 		{
-			ship_list[i].draw();
+			ship_list[i]->draw();
 		}
 	}
 
-	void move_ship(int x,int y,int dx,int dy)
+	void move_ship(const int x,const int y,const int dx,const int dy)
 	{
 		current_ship->set_pos(x - dx, y - dy);
-		//current_ship->set_left(x-dx);
-		//current_ship->set_top(y-dy);
 	}
 
+	void rotate_current_ship()
+	{
+		current_ship->rotate_ship();
+	}
 
 	void get_current_ship(int x,int y)
 	{
 
 		for (int i = 0; i < ship_list.size(); i++)
 		{
-			if (ship_list[i].check_cursor_hit(x, y))
-				current_ship = &ship_list[i];
+			if (ship_list[i]->check_cursor_hit(x, y))
+				current_ship = ship_list[i];
 		}
 	}
 
-public:
+	void delete_all_ship()
+	{
+		for (int i = 0; i < ship_list.size(); i++)
+		{
+			delete ship_list[i];
+		}
 
+		ship_list.clear();
+	}
+
+public:
 	Board board;
-	Ship* current_ship = &ship1;
+	Ship* current_ship = nullptr;
 
 private:
-
-	Ship ship1;
-	Ship ship2;
-	Ship ship3;
-	Ship ship4;
-	Ship ship5;
-	vector<Ship>ship_list;
-
+	int num_of_ship = 5;
+	
+	vector<Ship*>ship_list;
+	int ship_count;
 	bool is_win = false;
 	int ship_grid_have = 12;
 };
