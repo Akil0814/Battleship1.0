@@ -33,9 +33,11 @@ IMAGE Base;
 IMAGE Ship_img[5];
 
 Scene* menu_scene = nullptr;
-Scene* Local_PVP_scene = nullptr;
-Scene* Local_PVP_Setup_scene=nullptr;
 Scene* setting_scene = nullptr;
+Scene* Setup_scene = nullptr;
+Scene* PVE_scene = nullptr;
+Scene* Online_PVP_scene = nullptr;
+Scene* Local_PVP_scene = nullptr;
 
 SceneManager scene_manager;
 
@@ -80,8 +82,7 @@ int main()
 	BeginBatchDraw();
 
 	menu_scene = new MenuScene();
-	//Local_PVP_scene =new LocalPVPScene();
-	Local_PVP_Setup_scene=new LocalPVPSetupScene();
+	Setup_scene=new LocalPVPSetupScene();
 
 	scene_manager.set_current_scene(menu_scene);
 

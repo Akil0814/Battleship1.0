@@ -33,7 +33,7 @@ public:
 		if (button_localPVP.is_clicked_now())
 		{
 			std::cout << "按钮被点击，切换场景" << std::endl;
-			scene_manager.switch_to(SceneManager::SceneType::Local_PVP_Setup);
+			scene_manager.switch_to(SceneManager::SceneType::Setup);
 			button_localPVP.reset_click();
 		}
 	}

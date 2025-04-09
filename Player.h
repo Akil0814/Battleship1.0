@@ -20,8 +20,7 @@ public:
 		for (int i = 0; i < ship_list.size(); i++)
 		{
 			ship_list[i].set_image(&Ship_img[i]);
-			ship_list[i].set_left(0);
-			ship_list[i].set_top(def);
+			ship_list[i].set_pos(0, def);
 			def += 50;
 		}
 	}
@@ -36,8 +35,9 @@ public:
 
 	void move_ship(int x,int y,int dx,int dy)
 	{
-		current_ship->set_left(x-dx);
-		current_ship->set_top(y-dy);
+		current_ship->set_pos(x - dx, y - dy);
+		//current_ship->set_left(x-dx);
+		//current_ship->set_top(y-dy);
 	}
 
 

@@ -3,14 +3,10 @@
 
 extern Scene* menu_scene;
 extern Scene* setting_scene;
+extern Scene* Setup_scene;
+extern Scene* PVE_scene;
 extern Scene* Local_PVP_scene;
-extern Scene* Local_PVP_Setup_scene;
-//extern Scene* PVE_scene;
-//extern Scene* PVE_Setup_scene;
-//extern Scene* Online_PVP_scene;
-//extern Scene* Online_PVP_Setup_scene;
-
-
+extern Scene* Online_PVP_scene;
 
 class SceneManager
 {
@@ -19,12 +15,10 @@ public:
 	{
 		Menu,
 		Setting,
+		Setup,
 		PVE,
-		PVE_Setup,
 		Online_PVP,
-		Online_PVP_Setup,
 		Local_PVP,
-		Local_PVP_Setup,
 	};
 
 public:
@@ -48,12 +42,19 @@ public:
 		case SceneType::Setting:
 			current_scene = setting_scene;
 			break;
+		case SceneType::Setup:
+			current_scene = Setup_scene;
+			break;
+		case SceneType::PVE:
+			current_scene = PVE_scene;
+			break;
+		case SceneType::Online_PVP:
+			current_scene = Online_PVP_scene;
+			break;
 		case SceneType::Local_PVP:
 			current_scene = Local_PVP_scene;
 			break;
-		case SceneType::Local_PVP_Setup:
-			current_scene = Local_PVP_Setup_scene;
-			break;
+
 		default:
 			break;
 		}
