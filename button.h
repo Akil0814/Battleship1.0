@@ -60,27 +60,29 @@ public:
 		case WM_LBUTTONUP:
 			if (status == Status::Pushed)
 			{
-				if (check_cursor_hit(msg.x, msg.y))
-					is_clicked = true;
+				is_clicked = true;
 				status = Status::Idle;
 			}
 			break;
 		}
 	}
 
-	bool check_cursor_hit(int x, int y) const
-	{
-		return x >= region.left && x <= region.right &&
-			y >= region.top && y <= region.bottom;
-	}
 
 	bool is_clicked_now() const { return is_clicked; }
 	bool is_hovered() const { return status == Status::Hovered; }
 
 	int get_width() const { return img_idle ? img_idle->getwidth() : 0; }
 	int get_height() const { return img_idle ? img_idle->getheight() : 0; }
-	int get_top() const { return region.top; }
-	int get_left() const { return region.left; }
+	int get_left() const { return region.left; }//x
+	int get_top() const { return region.top; }//y
+
+private:
+
+	bool check_cursor_hit(int x, int y) const
+	{
+		return x >= region.left && x <= region.right &&
+			y >= region.top && y <= region.bottom;
+	}
 
 private:
 	enum class Status { Idle, Hovered, Pushed };

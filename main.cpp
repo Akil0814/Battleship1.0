@@ -23,9 +23,9 @@ IMAGE Menu_Setting_Idle;
 IMAGE Menu_Setting_Hovered;
 IMAGE Menu_Setting_Pushed;
 
-IMAGE Restart_Idle;
-IMAGE Restart_Hovered;
-IMAGE Restart_Pushed;
+IMAGE Setup_next_Idle;
+IMAGE Setup_next_Hovered;
+IMAGE Setup_next_Pushed;
 
 IMAGE Bar;
 IMAGE Base;
@@ -66,9 +66,9 @@ void LoadResource()
 	loadimage(&Menu_Local_PVP_Idle, _T("res/Menu_Local_PVP_Idle.png"));
 	loadimage(&Menu_Local_PVP_Pushed, _T("res/Menu_Local_PVP_Pushed.png"));
 
-	loadimage(&Restart_Idle, _T("res/Restart_Idle.png"));
-	loadimage(&Restart_Hovered, _T("res/Restart_Hovered.png"));
-	loadimage(&Restart_Pushed, _T("res/Restart_Pushed.png"));
+	loadimage(&Setup_next_Idle, _T("res/Setup_next_Idle.png"));
+	loadimage(&Setup_next_Hovered, _T("res/Setup_next_Hovered.png"));
+	loadimage(&Setup_next_Pushed, _T("res/Setup_next_Pushed.png"));
 }
 
 

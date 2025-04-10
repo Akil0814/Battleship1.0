@@ -36,6 +36,12 @@ public:
 		update_pos();
 	}
 
+	void set_index(int x, int y)
+	{
+		ship_pos_index_x = x;
+		ship_pos_index_y = y;
+	}
+
 	void rotate_ship()
 	{
 		is_horizontal = !is_horizontal;
@@ -48,20 +54,6 @@ public:
 	void draw()
 	{
 		putimage(region.left, region.top, current_img);
-	}
-
-	void place_ship()//
-	{
-		ship_pos_index_x = region.top / size_of_base;
-		if (region.top % size_of_base > size_of_base / 2)
-			ship_pos_index_x++;
-
-		ship_pos_index_y = region.left / size_of_base;
-		if (region.left % size_of_base > size_of_base / 2)
-			ship_pos_index_y++;
-
-		region.top = ship_pos_index_x * size_of_base;
-		region.left = ship_pos_index_y * size_of_base;
 	}
 
 	void is_hit()
@@ -78,9 +70,9 @@ public:
 
 	int get_ship_pos_index_y()const {	return ship_pos_index_y; }
 
-	int get_top() const{ return region.top; }
+	int get_top() const{ return region.top; }//y
 
-	int get_left() const {	return region.left;}
+	int get_left() const {	return region.left;}//x
 
 	int get_ship_size()const	{	return size_of_ship; }
 
@@ -115,9 +107,6 @@ private:
 
 	int ship_pos_index_x =0;
 	int ship_pos_index_y = 0;
-
-	int ship_pos_index_x_memory = 0;
-	int ship_pos_index_y_memory = 0;
 
 	bool is_horizontal = true;
 	bool is_ship_sink = false;

@@ -24,6 +24,70 @@ public:
 		board_width = col * base_width;
 	}
 
+	void ship_moved(const int size, const bool is_horizontal, const int x, const int y)
+	{
+		cout << "ship moved" << endl;
+		if (x >= col || y >= row || x < 0 || y < 0)
+		{
+			show_board();
+			return;
+		}
+
+		std::cout << "not in if" << endl;//test//////////////////////
+
+		if (is_horizontal)
+		{
+				for (int i = 0; i < size; i++)
+				{
+					board_data[x + i][y] = IS_EMPTY;
+				}
+		}
+		else
+		{
+				for (int i = 0; i < size; i++)
+				{
+					board_data[x][y + i] = IS_EMPTY;
+				}
+		}
+		show_board();////////////////////////////
+
+	}
+
+	bool set_ship(const int size, const bool is_horizontal,const int x,const int y)
+	{
+
+		if (x < col && y < row && x>=0 && y>=0)
+		{
+			if (is_horizontal)
+			{
+				if (x + size <= col)
+				{
+					for (int i = 0; i < size; i++)
+					{
+						board_data[x+i][y] = IS_SHIP;
+					}
+					show_board();////////////////////////////
+					return true;
+				}
+			}
+			else
+			{
+				if (y + size <= row)
+				{
+					for (int i = 0; i < size; i++)
+					{
+						board_data[x][y+i] = IS_SHIP;
+					}
+					show_board();/////////////////////////////////
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	void draw_setup_board()
 	{
 		for (int i = 0; i < row; i++)
@@ -97,7 +161,6 @@ public:
 	}
 
 
-
 	int get_width()const
 	{
 		return board_width;
@@ -106,6 +169,19 @@ public:
 	int get_height()const
 	{
 		return board_height;
+	}
+
+	void show_board()
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				cout << board_data[j][i] << " ";
+			}
+			cout << endl;
+		}
+		cout << endl;
 	}
 
 private:

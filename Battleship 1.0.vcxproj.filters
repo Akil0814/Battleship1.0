@@ -16,6 +16,9 @@
     <Filter Include="头文件\Scene">
       <UniqueIdentifier>{5c576601-2bd1-4b78-8dcb-ee77ca812d67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Scene\Game Scene">
+      <UniqueIdentifier>{b93de89e-3280-4728-b175-95ad307700f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,9 +31,6 @@
     </ClInclude>
     <ClInclude Include="button.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="game_scene.h">
-      <Filter>头文件\Scene</Filter>
     </ClInclude>
     <ClInclude Include="menu_scene.h">
       <Filter>头文件\Scene</Filter>
@@ -49,6 +49,15 @@
     </ClInclude>
     <ClInclude Include="setup_scene.h">
       <Filter>头文件\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="game_scene.h">
+      <Filter>头文件\Scene\Game Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="local_pvp_scene.h">
+      <Filter>头文件\Scene\Game Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="pve_scene.h">
+      <Filter>头文件\Scene\Game Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

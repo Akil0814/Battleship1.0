@@ -61,7 +61,6 @@ public:
 		current_scene->on_enter();
 	}
 
-
 	void on_update()
 	{
 		current_scene->on_update();
