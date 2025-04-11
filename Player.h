@@ -51,15 +51,16 @@ public:
 
 	void rotate_current_ship()
 	{
-		if (current_ship->get_ship_pos_index_y() == 10)
+		if (current_ship->get_ship_pos_index_y() == 10)//will not rotate if ship is out of board
 			return;
 
-		board.ship_moved(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
-		if (board.set_ship(current_ship->get_ship_size(), !current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y()))
+		board.ship_moved(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());//take ship out from the board
+		current_ship->rotate_ship();
+		
+		if (!board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y()))
 		{
-			cout << "rotate" << endl;
 			current_ship->rotate_ship();
-			current_ship->set_pos(current_ship_move_to_index_x * size_of_base, current_ship_move_to_index_y * size_of_base);
+			board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
 		}
 	}
 
@@ -79,17 +80,20 @@ public:
 	void put_current_ship()
 	{
 		ship_is_moving = false;
-		cout << "ship stop moving" << endl;
 
 		current_ship_move_to_index_y = current_ship->get_top() / size_of_base;
+
+
 		if (current_ship->get_top() % size_of_base > size_of_base / 2)
 			current_ship_move_to_index_y++;
+
 
 		current_ship_move_to_index_x = current_ship->get_left() / size_of_base;
 		if (current_ship->get_left() % size_of_base > size_of_base / 2)
 			current_ship_move_to_index_x++;
 
-		if (board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y))
+
+		if (board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y))//will retrurn fales if pos is not avilable
 		{
 			current_ship->set_pos(current_ship_move_to_index_x * size_of_base, current_ship_move_to_index_y * size_of_base);
 			current_ship->set_index(current_ship_move_to_index_x, current_ship_move_to_index_y);
@@ -97,7 +101,7 @@ public:
 		else
 		{
 			current_ship->set_pos(current_ship->get_ship_pos_index_x() * size_of_base, current_ship->get_ship_pos_index_y() * size_of_base);
-			board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y);
+			board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
 		}
 
 	}

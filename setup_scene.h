@@ -72,25 +72,30 @@ public:
 
 		if (button_next.is_clicked_now())
 		{
-			switch (target_scene)
+			cout << "current_player->board.get_ship_count_index()=" << current_player->board.get_ship_count_index() << endl;
+			if (current_player->board.get_ship_count_index()==17)
 			{
-			case SceneManager::SceneType::PVE:
-				scene_manager.switch_to(SceneManager::SceneType::PVE);
-				break;
-			case SceneManager::SceneType::Online_PVP:
-				break;
-			case SceneManager::SceneType::Local_PVP:
-				if (current_player == &P2)
+				switch (target_scene)
 				{
-					scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
-					current_player = &P1;
+				case SceneManager::SceneType::PVE:
+					scene_manager.switch_to(SceneManager::SceneType::PVE);
+					break;
+				case SceneManager::SceneType::Online_PVP:
+					break;
+				case SceneManager::SceneType::Local_PVP:
+					if (current_player == &P2)
+					{
+						scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
+						current_player = &P1;
+					}
+					else
+						current_player = &P2;
+					break;
+				default:
+					break;
 				}
-				else
-					current_player = &P2;
-				break;
-			default:
-				break;
 			}
+
 			button_next.reset_click();
 		}
 	}
@@ -117,19 +122,22 @@ public:
 
 		if(msg.message == WM_LBUTTONDOWN)
 		{
-			if (current_player->current_ship->check_cursor_hit(msg_x, msg_y))
+			if (current_player->current_ship != nullptr && current_player->current_ship->check_cursor_hit(msg_x, msg_y))
 				move_current_ship = true;
 		}
 
 		if(msg.message == WM_LBUTTONUP)
 		{
-			move_current_ship = false;
-			current_player->put_current_ship();
+			if (move_current_ship)
+			{
+				current_player->put_current_ship();
+				move_current_ship = false;
+			}
 		}
 
 		if (msg.message == WM_RBUTTONDOWN)
 		{
-			if (current_player->current_ship->check_cursor_hit(msg_x, msg_y))
+			if (current_player->current_ship != nullptr && current_player->current_ship->check_cursor_hit(msg_x, msg_y))
 				rotate_current_ship = true;
 		}
 		button_next.process_event(msg);

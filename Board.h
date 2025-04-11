@@ -26,20 +26,20 @@ public:
 
 	void ship_moved(const int size, const bool is_horizontal, const int x, const int y)
 	{
-		cout << "ship moved" << endl;
+		cout << "ship moved" << endl;/////////////////////////////////////
 		if (x >= col || y >= row || x < 0 || y < 0)
 		{
 			show_board();
 			return;
 		}
 
-		std::cout << "not in if" << endl;//test//////////////////////
 
 		if (is_horizontal)
 		{
 				for (int i = 0; i < size; i++)
 				{
 					board_data[x + i][y] = IS_EMPTY;
+					ship_count_index--;
 				}
 		}
 		else
@@ -47,44 +47,60 @@ public:
 				for (int i = 0; i < size; i++)
 				{
 					board_data[x][y + i] = IS_EMPTY;
+					ship_count_index--;
 				}
 		}
 		show_board();////////////////////////////
 
 	}
 
-	bool set_ship(const int size, const bool is_horizontal,const int x,const int y)
+	bool set_ship(const int size, const bool is_horizontal, const int x, const int y)
 	{
+		if (!(x >= 0 && y >= 0 && x < col && y < row))
+			return false;
 
-		if (x < col && y < row && x>=0 && y>=0)
+		if (is_horizontal)
 		{
-			if (is_horizontal)
-			{
-				if (x + size <= col)
-				{
-					for (int i = 0; i < size; i++)
-					{
-						board_data[x+i][y] = IS_SHIP;
-					}
-					show_board();////////////////////////////
-					return true;
-				}
-			}
-			else
-			{
-				if (y + size <= row)
-				{
-					for (int i = 0; i < size; i++)
-					{
-						board_data[x][y+i] = IS_SHIP;
-					}
-					show_board();/////////////////////////////////
+			if (x + size > col)
+				return false;  // out of range
 
-					return true;
+			for (int i = 0; i < size; i++)//make shure the board is empty
+			{
+				if (board_data[x + i][y] == IS_SHIP)
+				{
+					return false;
 				}
 			}
+
+			for (int i = 0; i < size; i++)
+			{
+				board_data[x + i][y] = IS_SHIP;
+				ship_count_index++;
+			}
+			show_board();
+			return true;
 		}
+		else
+		{
+			if (y + size > row) return false;
 
+			for (int i = 0; i < size; i++)
+			{
+				if (board_data[x][y + i] == IS_SHIP)
+				{
+					return false;
+				}
+			}
+
+			for (int i = 0; i < size; i++)
+			{
+				board_data[x][y + i] = IS_SHIP;
+				ship_count_index++;
+			}
+
+			show_board();
+			return true;
+		}
 		return false;
 	}
 
@@ -171,6 +187,11 @@ public:
 		return board_height;
 	}
 
+	int get_ship_count_index()const
+	{
+		return ship_count_index;
+	}
+
 	void show_board()
 	{
 		for (int i = 0; i < row; i++)
@@ -190,6 +211,8 @@ private:
 
 	int row = 10;
 	int col = 10;
+
+	int ship_count_index = 0;
 
 	int board_height = 0;
 	int board_width= 0;
