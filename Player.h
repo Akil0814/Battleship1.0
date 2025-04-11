@@ -11,10 +11,7 @@ class Player
 {
 public:
 	Player() = default;
-	~Player()
-	{
-		delete_all_ship();
-	}
+	~Player() = default;
 
 	void set_ship_img()
 	{

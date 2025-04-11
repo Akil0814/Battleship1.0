@@ -6,11 +6,7 @@ class Ship
 {
 public:
 	Ship(){}
-	~Ship()
-	{
-		if (rotate_img != nullptr)
-			delete rotate_img;
-	}
+	~Ship(){}
 
 	void set_image(IMAGE* idle)
 	{

@@ -7,6 +7,7 @@
 #include"menu_scene.h"
 #include"game_scene.h"
 #include"setup_scene.h"
+#include"local_pvp_scene.h"
 
 #include"button.h"
 #include"board.h"
@@ -29,6 +30,8 @@ IMAGE Setup_next_Pushed;
 
 IMAGE Bar;
 IMAGE Base;
+IMAGE Hit;
+IMAGE Miss;
 
 IMAGE Ship_img[5];
 
@@ -52,6 +55,9 @@ void LoadResource()
 
 	loadimage(&Bar, _T("res/Bar.png"));
 	loadimage(&Base, _T("res/Base.png"));
+	loadimage(&Hit, _T("res/Hit.png"));
+	loadimage(&Miss, _T("res/Miss.png"));
+
 
 	loadimage(&Ship_img[0], _T("res/Ship1.png"));
 	loadimage(&Ship_img[1], _T("res/Ship2.png"));
@@ -84,6 +90,8 @@ int main()
 
 	menu_scene = new MenuScene();
 	setup_scene= new SetupScene(SceneManager::SceneType::Local_PVP);
+	local_PVP_scene = new LocalPvpScene();
+
 
 	scene_manager.set_current_scene(menu_scene);
 

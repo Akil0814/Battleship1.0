@@ -9,6 +9,8 @@ using namespace std;
 
 extern IMAGE Base;
 extern IMAGE Bar;
+extern IMAGE Hit;
+extern IMAGE Miss;
 
 class Board
 {
@@ -18,7 +20,7 @@ public:
 
 	void set_board()
 	{
-		board_see.assign(row, vector<int>(col, IS_EMPTY));
+		//board_see.assign(row, vector<int>(col, IS_EMPTY));
 		board_data.assign(row, vector<int>(col, IS_EMPTY));
 		board_height = row * base_width;
 		board_width = col * base_width;
@@ -32,7 +34,6 @@ public:
 			show_board();
 			return;
 		}
-
 
 		if (is_horizontal)
 		{
@@ -115,22 +116,22 @@ public:
 		}
 	}
 
-	void draw_player_turn()
+	void draw_player_board()
 	{
 		for (int i = 0; i < row; i++)
 		{
 			for (int j = 0; j < col; j++)
 			{
-				switch (board_see[i][j])
+				switch (board_data[i][j])
 				{
 				case IS_EMPTY:
-					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					putimage(i * base_width, j * base_width, &Base);
 					break;
 				case IS_CHEAKED:
-					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					putimage(i * base_width, j * base_width, &Miss);
 					break;
 				case IS_HIT:
-					putimage(j * base_width + board_width + 30, i * base_width, &Base);
+					putimage(i * base_width, j * base_width, &Hit);
 					break;
 				default:
 					break;
@@ -139,23 +140,25 @@ public:
 		}
 	}
 
-	void draw_enemy_turn()
+	void draw_player_board_enemy_turn()
 	{
 		for (int i = 0; i < row; i++)
 		{
 			for (int j = 0; j < col; j++)
 			{
-				switch (board_see[i][j])
+				switch (board_data[i][j])
 				{
 				case IS_EMPTY:
-					putimage(j * base_width, i * base_width, &Base);
+					putimage((i + 1) * base_width + board_width, j * base_width, &Base);
 					break;
 				case IS_CHEAKED:
-					putimage(j * base_width, i * base_width, &Base);
+					putimage((i + 1) * base_width + board_width, j * base_width, &Miss);
 					break;
 				case IS_HIT:
-					putimage(j * base_width, i * base_width, &Base);
+					putimage((i + 1) * base_width + board_width, j * base_width, &Hit);
 					break;
+				case IS_SHIP:
+					putimage((i + 1) * base_width + board_width, j * base_width, &Base);
 				default:
 					break;
 				}
@@ -163,16 +166,42 @@ public:
 		}
 	}
 
-	void check_hit(int x,int y)
+	bool check_board(int x,int y)
 	{
-		if (board_data[x][y] == IS_SHIP && board_see[x][y] == IS_EMPTY)
+		if (x<0 || x>col || y<0 || y>row)
 		{
-			board_see[x][y] = IS_HIT;
+			cout << "Error in msg to index" << endl;
+			return false;
+		}
+
+		if (board_data[x][y] == IS_SHIP)
+		{
+			cout << "is ship" << endl;
+			show_board();
+			return true;
+		}
+		else if (board_data[x][y] == IS_EMPTY)
+		{
+			cout << "is empty" << endl;
+			show_board();
+			return true;
+		}
+
+		return false;
+	}
+
+	void update_board(int x,int y)
+	{
+		if (board_data[x][y] == IS_SHIP)
+		{
 			board_data[x][y] = IS_HIT;
+			ship_count_index--;
+			show_board();
 		}
-		if (board_data[x][y] == IS_EMPTY && board_see[x][y] == IS_EMPTY)
+		else if (board_data[x][y] == IS_EMPTY)
 		{
-			board_see[x][y] = IS_CHEAKED;
+			board_data[x][y] = IS_CHEAKED;
+			show_board();
 		}
 	}
 
@@ -206,7 +235,7 @@ public:
 	}
 
 private:
-	vector<vector<int>>board_see;
+	//vector<vector<int>>board_see;
 	vector<vector<int>>board_data;
 
 	int row = 10;
