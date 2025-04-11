@@ -8,7 +8,6 @@ using namespace std;
 #define IS_HIT 3
 
 extern IMAGE Base;
-extern IMAGE Bar;
 extern IMAGE Hit;
 extern IMAGE Miss;
 
@@ -20,8 +19,8 @@ public:
 
 	void set_board()
 	{
-		//board_see.assign(row, vector<int>(col, IS_EMPTY));
 		board_data.assign(row, vector<int>(col, IS_EMPTY));
+		ship_count_index = 0;
 		board_height = row * base_width;
 		board_width = col * base_width;
 	}
@@ -125,6 +124,7 @@ public:
 				switch (board_data[i][j])
 				{
 				case IS_EMPTY:
+				case IS_SHIP:
 					putimage(i * base_width, j * base_width, &Base);
 					break;
 				case IS_CHEAKED:
@@ -204,7 +204,6 @@ public:
 			show_board();
 		}
 	}
-
 
 	int get_width()const
 	{

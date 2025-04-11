@@ -18,6 +18,7 @@ public:
     void on_enter()
     {
         initgraph(1050,550);
+        setbkcolor(RGB(128, 128, 128));
     }
 
     void on_update()
@@ -26,7 +27,7 @@ public:
         {
             cout << "right_button_down" << endl;
             right_button_down = false;
-            index_x = (msg_x / base_width)-row-1;
+            index_x = (msg_x / base_width);
             index_y = (msg_y / base_width);
 
             if (index_x >= 0 && index_x < row && index_y>=0 && index_y < col)
@@ -49,9 +50,8 @@ public:
 
     void on_draw()
     {
-        current_player->draw_all_ship();
-        current_player->board.draw_player_board();
-        get_next_player().board.draw_player_board_enemy_turn();
+        current_player->board.draw_player_board_enemy_turn();
+        get_next_player().board.draw_player_board();
     }
 
     void on_input(const ExMessage& msg)

@@ -28,7 +28,6 @@ IMAGE Setup_next_Idle;
 IMAGE Setup_next_Hovered;
 IMAGE Setup_next_Pushed;
 
-IMAGE Bar;
 IMAGE Base;
 IMAGE Hit;
 IMAGE Miss;
@@ -53,7 +52,6 @@ void LoadResource()
 {
 	loadimage(&Menu_background, _T("res/Menu_back_ground.png"));
 
-	loadimage(&Bar, _T("res/Bar.png"));
 	loadimage(&Base, _T("res/Base.png"));
 	loadimage(&Hit, _T("res/Hit.png"));
 	loadimage(&Miss, _T("res/Miss.png"));

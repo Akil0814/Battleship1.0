@@ -13,7 +13,6 @@ extern Player P1;
 extern Player P2;
 extern Player Computer;
 
-extern IMAGE Bar;
 extern IMAGE Setup_next_Idle;
 extern IMAGE Setup_next_Hovered;
 extern IMAGE Setup_next_Pushed;
@@ -31,12 +30,14 @@ public:
 		P1.set_ship_img();
 
 		WINDOW_WIDTH = P1.board.get_width();
-		WINDOW_HEIGHT = P1.board.get_height() + Bar.getheight();
+		WINDOW_HEIGHT = P1.board.get_height() + 60;
 
 		button_next.set_images(&Setup_next_Idle, &Setup_next_Hovered, &Setup_next_Pushed);
-		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, P1.board.get_height() + (Bar.getheight()-Setup_next_Idle.getheight())/2);
+		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, P1.board.get_height() + 15);
 
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setbkcolor(RGB(128, 128, 128));
+
 
 		switch (target_scene)
 		{
@@ -103,7 +104,7 @@ public:
 	void on_draw()
 	{
 
-		putimage(0, P1.board.get_height(), &Bar);
+		//putimage(0, P1.board.get_height(), &Bar);
 
 		current_player->board.draw_setup_board();
 		current_player->draw_all_ship();
