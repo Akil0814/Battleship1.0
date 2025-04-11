@@ -7,6 +7,8 @@ extern Scene* setup_scene;
 extern Scene* PVE_scene;
 extern Scene* local_PVP_scene;
 extern Scene* online_PVP_scene;
+extern Scene* game_end_scene;
+
 
 class SceneManager
 {
@@ -19,6 +21,7 @@ public:
 		PVE,
 		Online_PVP,
 		Local_PVP,
+		Game_end
 	};
 
 public:
@@ -53,6 +56,9 @@ public:
 			break;
 		case SceneType::Local_PVP:
 			current_scene = local_PVP_scene;
+			break;
+		case SceneType::Game_end:
+			current_scene = game_end_scene;
 			break;
 
 		default:

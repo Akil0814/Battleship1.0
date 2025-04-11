@@ -1,5 +1,7 @@
 #pragma once
 #include<vector>
+#include <random>
+
 #include"board.h"
 #include"ship.h"
 
@@ -26,13 +28,7 @@ public:
 		}
 	}
 	
-	void draw_all_ship()
-	{
-		for (int i = 0; i < ship_list.size(); i++)
-		{
-			ship_list[i]->draw();
-		}
-	}
+
 
 	void get_current_ship(int x, int y)
 	{
@@ -90,7 +86,7 @@ public:
 			current_ship_move_to_index_x++;
 
 
-		if (board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y))//will retrurn fales if pos is not avilable
+		if (board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y))//will return false if pos is not avliable
 		{
 			current_ship->set_pos(current_ship_move_to_index_x * size_of_base, current_ship_move_to_index_y * size_of_base);
 			current_ship->set_index(current_ship_move_to_index_x, current_ship_move_to_index_y);
@@ -112,12 +108,11 @@ public:
 
 		ship_list.clear();
 	}
-
 public:
 	Board board;
 	Ship* current_ship = nullptr;
 
-private:
+protected:
 	int num_of_ship = 5;
 	int size_of_base = 50;
 

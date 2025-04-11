@@ -18,6 +18,7 @@ public:
     void on_enter()
     {
         initgraph(1050,550);
+        setbkcolor(RGB(128, 128, 128));
     }
 
     void on_update()
@@ -26,7 +27,7 @@ public:
         {
             cout << "right_button_down" << endl;
             right_button_down = false;
-            index_x = (msg_x / base_width)-row-1;
+            index_x = (msg_x / base_width);
             index_y = (msg_y / base_width);
 
             if (index_x >= 0 && index_x < row && index_y>=0 && index_y < col)
@@ -49,9 +50,9 @@ public:
 
     void on_draw()
     {
-        current_player->draw_all_ship();
-        current_player->board.draw_player_board();
-        get_next_player().board.draw_player_board_enemy_turn();
+        current_player->board.draw_player_board_enemy_turn();
+        get_next_player().board.draw_player_board();
+        draw_tip_text();
     }
 
     void on_input(const ExMessage& msg)
@@ -70,6 +71,27 @@ public:
     }
 
 private:
+    void draw_tip_text()
+    {
+        static TCHAR str1[32];
+        static TCHAR str2[32];
+
+        if (current_player == &P1)
+        {
+            _stprintf_s(str1, _T("Player 1 turn"));
+            _stprintf_s(str2, _T("Player 1 board"));
+        }
+        else
+        {
+            _stprintf_s(str1, _T("Player 2 turn"));
+            _stprintf_s(str2, _T("Player 2 board"));
+        }
+
+        settextcolor(RGB(0, 0, 0));
+        outtextxy(20, 520, str1);
+        outtextxy(540, 520, str2);
+    }
+
     Player get_next_player()
     {
         return current_player == &P1 ? P2 : P1;
@@ -79,6 +101,8 @@ private:
     {
         current_player == &P1 ? current_player = &P2 : current_player = &P1;
     }
+
+private:
 
     bool right_button_down = false;
 

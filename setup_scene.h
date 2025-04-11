@@ -3,17 +3,18 @@
 #include "scene.h"
 
 #include"player.h"
+#include"human_player.h"
+#include"computer_player.h"
+
 #include"button.h"
 
 extern SceneManager scene_manager;
 extern Scene* menu_scene;
 
 extern Player* current_player;
-extern Player P1;
-extern Player P2;
-extern Player Computer;
+extern Player* player1;
+extern Player* player2;
 
-extern IMAGE Bar;
 extern IMAGE Setup_next_Idle;
 extern IMAGE Setup_next_Hovered;
 extern IMAGE Setup_next_Pushed;
@@ -26,29 +27,25 @@ public:
 
 	void on_enter()
 	{
-		current_player = &P1;
-		P1.board.set_board();
-		P1.set_ship_img();
-
-		WINDOW_WIDTH = P1.board.get_width();
-		WINDOW_HEIGHT = P1.board.get_height() + Bar.getheight();
+		current_player = player1;
+		//初始化p1数据
 
 		button_next.set_images(&Setup_next_Idle, &Setup_next_Hovered, &Setup_next_Pushed);
-		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, P1.board.get_height() + (Bar.getheight()-Setup_next_Idle.getheight())/2);
+		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, 550);
 
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
+		setbkcolor(RGB(128, 128, 128));
+
 
 		switch (target_scene)
 		{
 		case SceneManager::SceneType::PVE:
-			Computer.board.set_board();
-			Computer.set_ship_img();
-			break;
-		case SceneManager::SceneType::Online_PVP:
+			player2 = new ComputerPlayer();
 			break;
 		case SceneManager::SceneType::Local_PVP:
-			P2.board.set_board();
-			P2.set_ship_img();
+			player2 = new HumanPlayer();
+			break;
+		case SceneManager::SceneType::Online_PVP:
 			break;
 		default:
 			break;
@@ -83,13 +80,13 @@ public:
 				case SceneManager::SceneType::Online_PVP:
 					break;
 				case SceneManager::SceneType::Local_PVP:
-					if (current_player == &P2)
+					if (current_player == player2)
 					{
 						scene_manager.switch_to(SceneManager::SceneType::Local_PVP);
-						current_player = &P1;
+						current_player = player1;
 					}
 					else
-						current_player = &P2;
+						current_player = player2;
 					break;
 				default:
 					break;
@@ -103,10 +100,7 @@ public:
 	void on_draw()
 	{
 
-		putimage(0, P1.board.get_height(), &Bar);
-
-		current_player->board.draw_setup_board();
-		current_player->draw_all_ship();
+		draw_tip_text_player();
 
 		button_next.draw();
 	}
@@ -149,6 +143,19 @@ public:
 	}
 
 private:
+	void draw_tip_text_player()
+	{
+		static TCHAR str[32];
+		if(current_player==player1)
+			_stprintf_s(str, _T("Player 1 setting board"));
+		else
+			_stprintf_s(str, _T("Player 2 setting board"));
+		settextcolor(RGB(0, 0, 0));
+		outtextxy(250, 520,str);
+	}
+
+private:
+
 	Button button_next;
 
 	SceneManager::SceneType target_scene;
@@ -163,4 +170,6 @@ private:
 	int msg_x =0;
 	int msg_y = 0;
 
+	int text_x = 300;
+	int text_y = 300;
 };

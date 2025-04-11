@@ -8,7 +8,6 @@ using namespace std;
 #define IS_HIT 3
 
 extern IMAGE Base;
-extern IMAGE Bar;
 extern IMAGE Hit;
 extern IMAGE Miss;
 
@@ -20,8 +19,8 @@ public:
 
 	void set_board()
 	{
-		//board_see.assign(row, vector<int>(col, IS_EMPTY));
 		board_data.assign(row, vector<int>(col, IS_EMPTY));
+		ship_count_index = 0;
 		board_height = row * base_width;
 		board_width = col * base_width;
 	}
@@ -125,6 +124,7 @@ public:
 				switch (board_data[i][j])
 				{
 				case IS_EMPTY:
+				case IS_SHIP:
 					putimage(i * base_width, j * base_width, &Base);
 					break;
 				case IS_CHEAKED:
@@ -205,7 +205,6 @@ public:
 		}
 	}
 
-
 	int get_width()const
 	{
 		return board_width;
@@ -235,7 +234,15 @@ public:
 	}
 
 private:
-	//vector<vector<int>>board_see;
+	inline void putimage_alpha(int dst_x, int dst_y, IMAGE* img)//渲染有透明度的图片
+	{
+		int w = img->getwidth();
+		int h = img->getheight();
+		AlphaBlend(GetImageHDC(GetWorkingImage()), dst_x, dst_y, w, h,
+			GetImageHDC(img), 0, 0, w, h, { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA });
+	}
+
+private:
 	vector<vector<int>>board_data;
 
 	int row = 10;
