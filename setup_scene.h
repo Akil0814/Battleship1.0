@@ -28,6 +28,7 @@ public:
 	void on_enter()
 	{
 		current_player = player1;
+
 		//初始化p1数据
 
 		button_next.set_images(&Setup_next_Idle, &Setup_next_Hovered, &Setup_next_Pushed);
@@ -69,7 +70,8 @@ public:
 
 		if (button_next.is_clicked_now())
 		{
-			cout << "current_player->board.get_ship_count_index()=" << current_player->board.get_ship_count_index() << endl;
+			cout << "current_player->board.get_ship_count_index()=" << current_player->board.get_ship_count_index() << endl;//////test
+
 			if (current_player->board.get_ship_count_index()==17)
 			{
 				switch (target_scene)
@@ -99,9 +101,7 @@ public:
 
 	void on_draw()
 	{
-
 		draw_tip_text_player();
-
 		button_next.draw();
 	}
 
