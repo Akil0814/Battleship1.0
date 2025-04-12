@@ -27,10 +27,9 @@ public:
 
 	void ship_moved(const int size, const bool is_horizontal, const int x, const int y)
 	{
-		cout << "ship moved" << endl;/////////////////////////////////////
 		if (x >= col || y >= row || x < 0 || y < 0)
 		{
-			show_board();
+			show_board();//////////////////////////////test
 			return;
 		}
 
@@ -38,19 +37,27 @@ public:
 		{
 				for (int i = 0; i < size; i++)
 				{
-					board_data[x + i][y] = IS_EMPTY;
-					ship_count_index--;
+					if (board_data[x + i][y] == IS_SHIP)
+					{
+						board_data[x + i][y] = IS_EMPTY;
+						ship_count_index--;
+
+					}
 				}
 		}
 		else
 		{
 				for (int i = 0; i < size; i++)
 				{
-					board_data[x][y + i] = IS_EMPTY;
-					ship_count_index--;
+					if (board_data[x][y+i] == IS_SHIP)
+					{
+						board_data[x][y + i] = IS_EMPTY;
+						ship_count_index--;
+
+					}
 				}
 		}
-		show_board();////////////////////////////
+		show_board();//////////////////////////////test
 
 	}
 
@@ -76,8 +83,9 @@ public:
 			{
 				board_data[x + i][y] = IS_SHIP;
 				ship_count_index++;
+
 			}
-			show_board();
+			show_board();//////////////////////////////test
 			return true;
 		}
 		else
@@ -96,26 +104,17 @@ public:
 			{
 				board_data[x][y + i] = IS_SHIP;
 				ship_count_index++;
+				cout << "ship index=" << ship_count_index << endl;///////////////////////test
+
 			}
 
-			show_board();
+			show_board();//////////////////////////////test
 			return true;
 		}
 		return false;
 	}
 
-	void draw_setup_board()
-	{
-		for (int i = 0; i < row; i++)
-		{
-			for (int j = 0; j < col; j++)
-			{
-				putimage(j * base_width, i * base_width, &Base);
-			}
-		}
-	}
-
-	void draw_player_board()
+	void draw_player_board_left()
 	{
 		for (int i = 0; i < row; i++)
 		{
@@ -140,7 +139,7 @@ public:
 		}
 	}
 
-	void draw_player_board_enemy_turn()
+	void draw_player_board_right()
 	{
 		for (int i = 0; i < row; i++)
 		{
@@ -149,6 +148,7 @@ public:
 				switch (board_data[i][j])
 				{
 				case IS_EMPTY:
+				case IS_SHIP:
 					putimage((i + 1) * base_width + board_width, j * base_width, &Base);
 					break;
 				case IS_CHEAKED:
@@ -157,8 +157,6 @@ public:
 				case IS_HIT:
 					putimage((i + 1) * base_width + board_width, j * base_width, &Hit);
 					break;
-				case IS_SHIP:
-					putimage((i + 1) * base_width + board_width, j * base_width, &Base);
 				default:
 					break;
 				}
@@ -166,61 +164,55 @@ public:
 		}
 	}
 
-	bool check_board(int x,int y)
+	bool check_board(const int x,const int y)//const
 	{
 		if (x<0 || x>col || y<0 || y>row)
 		{
-			cout << "Error in msg to index" << endl;
+			cout << "Error in msg to index" << endl;//////////////////////////////test
 			return false;
 		}
 
 		if (board_data[x][y] == IS_SHIP)
 		{
-			cout << "is ship" << endl;
-			show_board();
+			cout << "is ship" << endl;//////////////////////////////test
+			show_board();//////////////////////////////test
 			return true;
 		}
 		else if (board_data[x][y] == IS_EMPTY)
 		{
-			cout << "is empty" << endl;
-			show_board();
+			cout << "is empty" << endl;//////////////////////////////test
+			show_board();//////////////////////////////test
 			return true;
 		}
 
 		return false;
 	}
 
-	void update_board(int x,int y)
+	void update_board(const int x,const int y)
 	{
 		if (board_data[x][y] == IS_SHIP)
 		{
 			board_data[x][y] = IS_HIT;
 			ship_count_index--;
-			show_board();
+			show_board();//////////////////////////////test
 		}
 		else if (board_data[x][y] == IS_EMPTY)
 		{
 			board_data[x][y] = IS_CHEAKED;
-			show_board();
+			show_board();//////////////////////////////test
 		}
 	}
 
-	int get_width()const
-	{
-		return board_width;
-	}
+	int get_width()const { return board_width; }
 
-	int get_height()const
-	{
-		return board_height;
-	}
+	int get_height()const { return board_height;}
 
-	int get_ship_count_index()const
-	{
-		return ship_count_index;
-	}
+	int get_ship_count_index()const { return ship_count_index;}
 
-	void show_board()
+	int get_board_type(int x, int y)const { return board_data[x][y]; }
+
+	//test
+	void show_board()//////////////////////////////test
 	{
 		for (int i = 0; i < row; i++)
 		{
@@ -231,7 +223,7 @@ public:
 			cout << endl;
 		}
 		cout << endl;
-	}
+	}//////////////////////////////test
 
 private:
 	inline void putimage_alpha(int dst_x, int dst_y, IMAGE* img)//渲染有透明度的图片

@@ -15,115 +15,48 @@ public:
 	Player() = default;
 	~Player() = default;
 
-	void set_ship_img()
+	virtual void setup_ship() = 0;
+
+	virtual void put_ship() = 0;
+
+	bool check_pos_can_hit(const int x,const int y)//const
 	{
-		delete_all_ship();
-		for (int i = 0; i < num_of_ship; i++)
+		if (board.check_board(x, y))
 		{
-			Ship* new_ship =new Ship;
-			new_ship->set_image(&Ship_img[i]);
-			new_ship->set_pos(0,board.get_height());
-			new_ship->set_index(0, 10);
-			ship_list.push_back(new_ship);
+			board.update_board(x, y);
+			return true;
 		}
-	}
-	
-
-
-	void get_current_ship(int x, int y)
-	{
-
-		for (int i = 0; i < ship_list.size(); i++)
-		{
-			if (ship_list[i]->check_cursor_hit(x, y))
-			{
-				current_ship = ship_list[i];
-			}
-		}
+		return false;
 	}
 
-	void rotate_current_ship()
+	int get_ship_count_index_on_board()const
 	{
-		if (current_ship->get_ship_pos_index_y() == 10)//will not rotate if ship is out of board
-			return;
-
-		board.ship_moved(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());//take ship out from the board
-		current_ship->rotate_ship();
-		
-		if (!board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y()))
-		{
-			current_ship->rotate_ship();
-			board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
-		}
+		return board.get_ship_count_index();
 	}
 
-	void move_ship(const int x,const int y)
+	void draw_player_board()
 	{
-		if (!ship_is_moving)
-		{
-			board.ship_moved(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
-			dx = x - current_ship->get_left();
-			dy = y - current_ship->get_top();
-
-			ship_is_moving = true;
-		}
-		current_ship->set_pos(x - dx, y - dy);
+		board.draw_player_board_left();
 	}
 
-	void put_current_ship()
+	void draw_player_board(bool is_left)
 	{
-		ship_is_moving = false;
-
-		current_ship_move_to_index_y = current_ship->get_top() / size_of_base;
-
-
-		if (current_ship->get_top() % size_of_base > size_of_base / 2)
-			current_ship_move_to_index_y++;
-
-
-		current_ship_move_to_index_x = current_ship->get_left() / size_of_base;
-		if (current_ship->get_left() % size_of_base > size_of_base / 2)
-			current_ship_move_to_index_x++;
-
-
-		if (board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship_move_to_index_x, current_ship_move_to_index_y))//will return false if pos is not avliable
-		{
-			current_ship->set_pos(current_ship_move_to_index_x * size_of_base, current_ship_move_to_index_y * size_of_base);
-			current_ship->set_index(current_ship_move_to_index_x, current_ship_move_to_index_y);
-		}
+		if (is_left)
+			board.draw_player_board_left();
 		else
-		{
-			current_ship->set_pos(current_ship->get_ship_pos_index_x() * size_of_base, current_ship->get_ship_pos_index_y() * size_of_base);
-			board.set_ship(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());
-		}
-
+			board.draw_player_board_right();
 	}
 
-	void delete_all_ship()
+	int check_pos_type(const int x, const int y)const
 	{
-		for (int i = 0; i < ship_list.size(); i++)
-		{
-			delete ship_list[i];
-		}
-
-		ship_list.clear();
+		return board.get_board_type(x, y);
 	}
-public:
-	Board board;
-	Ship* current_ship = nullptr;
 
 protected:
+	Board board;
+	
 	int num_of_ship = 5;
 	int size_of_base = 50;
 
-	int dx = 0;
-	int dy = 0;
-
-	int current_ship_move_to_index_x = 0;
-	int current_ship_move_to_index_y = 0;
-	
-	vector<Ship*>ship_list;
-	bool ship_is_moving=false;
 	bool is_win = false;
-	int ship_grid_have = 12;
 };

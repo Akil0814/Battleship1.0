@@ -12,8 +12,10 @@
 #include"pve_scene.h"
 
 #include"button.h"
+
 #include"board.h"
 #include"ship.h"
+
 #include"player.h"
 #include"computer_player.h"
 #include"human_player.h"
@@ -56,7 +58,7 @@ Scene* game_end_scene = nullptr;
 SceneManager scene_manager;
 
 Player* player1 = nullptr;
-Player* player1 = nullptr;
+Player* player2 = nullptr;
 Player* current_player = nullptr;
 
 void LoadResource()

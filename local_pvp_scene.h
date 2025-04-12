@@ -1,15 +1,13 @@
 #pragma once
 #include"game_scene.h"
 #include"player.h"
+#include"human_player.h"
 
 extern SceneManager scene_manager;
 extern Scene* menu_scene;
 
-extern Player* current_player;
-extern Player P1;
-extern Player P2;
-extern Player Computer;
-
+extern Player* player1;
+extern Player* player2;
 
 
 class LocalPvpScene :public GameScene
@@ -19,39 +17,33 @@ public:
     {
         initgraph(1050,550);
         setbkcolor(RGB(128, 128, 128));
+        current_human_player = dynamic_cast<HumanPlayer*>(player1);
     }
 
     void on_update()
     {
         if (right_button_down)
         {
-            cout << "right_button_down" << endl;
             right_button_down = false;
             index_x = (msg_x / base_width);
             index_y = (msg_y / base_width);
 
             if (index_x >= 0 && index_x < row && index_y>=0 && index_y < col)
             {
-                cout << "in if" << endl;
-
-                if (get_next_player().board.check_board(index_x, index_y))
+                if (get_next_player()->check_pos_can_hit(index_x, index_y))
                 {
-                    cout << "in if2" << endl;
                     switch_to_next_player();
-                    current_player->board.update_board(index_x, index_y);
                 }
-                cout << "out if" << endl;
-
             }
         }
-        if(!current_player->board.get_ship_count_index())
+        if(!current_human_player->get_ship_count_index_on_board())
             scene_manager.switch_to(SceneManager::SceneType::Menu);
     }
 
     void on_draw()
     {
-        current_player->board.draw_player_board_enemy_turn();
-        get_next_player().board.draw_player_board();
+        current_human_player->draw_player_board(false);
+        get_next_player()->draw_player_board();
         draw_tip_text();
     }
 
@@ -76,7 +68,7 @@ private:
         static TCHAR str1[32];
         static TCHAR str2[32];
 
-        if (current_player == &P1)
+        if (current_human_player == player1)
         {
             _stprintf_s(str1, _T("Player 1 turn"));
             _stprintf_s(str2, _T("Player 1 board"));
@@ -92,26 +84,17 @@ private:
         outtextxy(540, 520, str2);
     }
 
-    Player get_next_player()
+    HumanPlayer* get_next_player()
     {
-        return current_player == &P1 ? P2 : P1;
+        return current_human_player == player1 ? dynamic_cast<HumanPlayer*>(player2) : dynamic_cast<HumanPlayer*>(player1);
     }
 
     void switch_to_next_player()
     {
-        current_player == &P1 ? current_player = &P2 : current_player = &P1;
+        current_human_player == player1 ? current_human_player = dynamic_cast<HumanPlayer*>(player2) : current_human_player = dynamic_cast<HumanPlayer*>(player1);
     }
 
 private:
 
-    bool right_button_down = false;
-
-    int msg_x = 0;
-    int msg_y = 0;
-    int index_x = 0;
-    int index_y = 0;
-
-    int base_width = 50;
-    int row = 10;
-    int col = 10;
+    HumanPlayer* current_human_player = nullptr;
 };

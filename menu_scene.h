@@ -2,7 +2,8 @@
 #include "scene_manager.h"
 #include "scene.h"
 #include"setup_scene.h"
-#include"button.h"
+#include"local_pvp_scene.h"
+#include"pve_scene.h"
 
 extern IMAGE Menu_background;
 

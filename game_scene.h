@@ -17,10 +17,16 @@ public:
     virtual void on_input(const ExMessage& msg) = 0;
     virtual void on_exit() = 0;
 
-private:
-    // 通用游戏元素
-    //Board playerBoard;
-    //Board enemyBoard;
-    int currentTurn;
-    // ... 放舰艇、判断输赢等通用逻辑
+protected:
+    bool right_button_down = false;
+
+    int msg_x = 0;
+    int msg_y = 0;
+    int index_x = 0;
+    int index_y = 0;
+
+    int base_width = 50;
+    int row = 10;
+    int col = 10;
+
 };

@@ -23,11 +23,9 @@ public:
 	void set_pos(int x, int y)
 	{
 		region.left = x;
-		ship_pos_x = x;
 		region.right = region.left + current_img->getwidth();
 
 		region.top = y;
-		ship_pos_y = y;
 		region.bottom = region.top + current_img->getheight();
 		update_pos();
 	}
@@ -36,6 +34,7 @@ public:
 	{
 		ship_pos_index_x = x;
 		ship_pos_index_y = y;
+		set_pos(x * size_of_base, y * size_of_base);
 	}
 
 	void rotate_ship()
@@ -52,7 +51,7 @@ public:
 		putimage(region.left, region.top, current_img);
 	}
 
-	void is_hit()
+	void take_damage()
 	{
 		if (!is_ship_sink)
 		{
@@ -97,9 +96,6 @@ private:
 	int size_of_base=50;
 
 	int size_of_ship = 0;
-
-	int ship_pos_x =0;
-	int ship_pos_y = 0;
 
 	int ship_pos_index_x =0;
 	int ship_pos_index_y = 0;

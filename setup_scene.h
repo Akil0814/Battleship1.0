@@ -27,9 +27,13 @@ public:
 
 	void on_enter()
 	{
-		current_player = player1;
+		WINDOW_WIDTH = 500;
+		WINDOW_HEIGHT = 560;
 
-		//初始化p1数据
+		current_player = player1;
+		current_player->setup_ship();
+		current_human_player = dynamic_cast<HumanPlayer*>(player1);
+
 
 		button_next.set_images(&Setup_next_Idle, &Setup_next_Hovered, &Setup_next_Pushed);
 		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, 550);
@@ -42,9 +46,12 @@ public:
 		{
 		case SceneManager::SceneType::PVE:
 			player2 = new ComputerPlayer();
+			player2->setup_ship();
+			player2->put_ship();
 			break;
 		case SceneManager::SceneType::Local_PVP:
 			player2 = new HumanPlayer();
+			player2->setup_ship();
 			break;
 		case SceneManager::SceneType::Online_PVP:
 			break;
@@ -58,21 +65,19 @@ public:
 
 		if (move_current_ship)
 		{
-			current_player->move_ship(msg_x, msg_y);
+			current_human_player->move_ship(msg_x, msg_y);
 		}
 
 		if (rotate_current_ship)
 		{
 			if(!move_current_ship)
-				current_player->rotate_current_ship();
+				current_human_player->rotate_current_ship();
 			rotate_current_ship = false;
 		}
 
 		if (button_next.is_clicked_now())
 		{
-			cout << "current_player->board.get_ship_count_index()=" << current_player->board.get_ship_count_index() << endl;//////test
-
-			if (current_player->board.get_ship_count_index()==17)
+			if (current_human_player->get_ship_count_index_on_board() ==17)
 			{
 				switch (target_scene)
 				{
@@ -89,6 +94,7 @@ public:
 					}
 					else
 						current_player = player2;
+						current_human_player = dynamic_cast<HumanPlayer*>(player2);
 					break;
 				default:
 					break;
@@ -102,7 +108,10 @@ public:
 	void on_draw()
 	{
 		draw_tip_text_player();
+		current_human_player->draw_player_board();
+		current_human_player->draw_all_ship();
 		button_next.draw();
+
 	}
 
 	void on_input(const ExMessage& msg)
@@ -112,11 +121,11 @@ public:
 
 
 		if(!move_current_ship)
-		current_player->get_current_ship(msg_x, msg_y);
+			current_human_player->update_current_ship(msg_x, msg_y);
 
 		if(msg.message == WM_LBUTTONDOWN)
 		{
-			if (current_player->current_ship != nullptr && current_player->current_ship->check_cursor_hit(msg_x, msg_y))
+			if (current_human_player->try_select_ship(msg_x, msg_y))
 				move_current_ship = true;
 		}
 
@@ -124,14 +133,14 @@ public:
 		{
 			if (move_current_ship)
 			{
-				current_player->put_current_ship();
+				current_human_player->put_ship();
 				move_current_ship = false;
 			}
 		}
 
 		if (msg.message == WM_RBUTTONDOWN)
 		{
-			if (current_player->current_ship != nullptr && current_player->current_ship->check_cursor_hit(msg_x, msg_y))
+			if (current_human_player->try_select_ship(msg_x, msg_y))
 				rotate_current_ship = true;
 		}
 		button_next.process_event(msg);
@@ -155,6 +164,7 @@ private:
 	}
 
 private:
+	HumanPlayer* current_human_player = nullptr;
 
 	Button button_next;
 
