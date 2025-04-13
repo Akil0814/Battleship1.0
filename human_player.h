@@ -33,7 +33,7 @@ public:
 
 	void rotate_current_ship()
 	{
-		if (current_ship->get_ship_pos_index_y() == 10)//will not rotate if ship is at default pos//test
+		if (current_ship->get_ship_pos_index_y() == 10)//will not rotate if ship is at default pos
 			return;
 
 		board.ship_moved(current_ship->get_ship_size(), current_ship->check_if_is_horizontal(), current_ship->get_ship_pos_index_x(), current_ship->get_ship_pos_index_y());//take ship out from the board

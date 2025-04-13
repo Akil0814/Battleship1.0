@@ -102,7 +102,6 @@ public:
 
 	}
 
-
 	int check_pos_type(const int x, const int y)const
 	{
 		return board.get_board_type(x, y);

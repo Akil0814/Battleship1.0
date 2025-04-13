@@ -45,7 +45,6 @@ public:
 			setup_scene = new SetupScene(SceneManager::SceneType::Local_PVP);
 			local_PVP_scene = new LocalPvpScene();
 
-
 			scene_manager.switch_to(SceneManager::SceneType::Setup);
 			button_localPVP.reset_click();
 		}
@@ -53,7 +52,6 @@ public:
 		{
 			setup_scene = new SetupScene(SceneManager::SceneType::PVE);
 			PVE_scene = new PveScene();
-
 
 			scene_manager.switch_to(SceneManager::SceneType::Setup);
 			button_PVE.reset_click();

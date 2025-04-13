@@ -135,5 +135,9 @@ int main()
 
 	EndBatchDraw();
 
+	delete menu_scene;
+	delete game_end_scene;
+	delete player1;
+
 	return 0;
 }

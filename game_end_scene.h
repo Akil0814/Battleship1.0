@@ -47,6 +47,9 @@ public:
 
     void on_exit()
     {
+        player1->delete_all_ship();
+        player2->delete_all_ship();
+
         delete player2;
     }
 

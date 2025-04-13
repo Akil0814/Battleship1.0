@@ -49,7 +49,8 @@ public:
 	void check_if_hit_target(int type)
 	{
 		time_attack++;
-
+		time_try_hit = 0;
+		cout<<"time_attack=" << time_attack << endl;//////////////////////////test
 		switch (current_strategy)
 		{
 		case Strategy::Random_hit:
@@ -97,7 +98,8 @@ public:
 
 	POINT decide_attack_position()
 	{
-		
+		time_try_hit++;
+		cout << "time try hit=" <<time_try_hit<< endl;
 		switch (current_strategy)
 		{
 		case Strategy::Random_hit:
@@ -176,7 +178,6 @@ private:
 			current_direction = Direction::Up;
 			break;
 		default:
-			cout << "out of switch next_direction()" << endl;
 			break;
 		}
 	}
@@ -192,7 +193,7 @@ private:
 	{
 
 
-		if (time_attack > 55)
+		if (time_attack > 60|| time_try_hit>1000)
 		{
 			if (ship_point_list.size())
 			{
@@ -267,19 +268,15 @@ private:
 			x_hit = x_hit - 1;
 			break;
 		default:
-			cout << "out of switch try_find_direction" << endl;
 			break;
 		}
 
-		cout << "x" << x_hit << endl;
-		cout << "y" << y_hit << endl;
 		hit.x = x_hit;
 		hit.y = y_hit;
 	}
 
 	void change_side_checking()
 	{
-		cout << "change_side_checking" << endl;
 		switch (current_direction)
 		{
 		case Direction::Up:
@@ -305,8 +302,6 @@ private:
 		int index = 0;
 		do
 		{
-			cout << "do while" << endl;
-
 			if (ship_point_list.size() == 0)
 				return;
 
@@ -316,24 +311,18 @@ private:
 			switch (time_look_around)
 			{
 			case 0:
-				cout << "0" << endl;
 				hit.y = hit.y - 1;
 				time_look_around++;
 				break;
 			case 1:
-				cout << "1" << endl;
 				hit.y = hit.y +1;
 				time_look_around++;
 				break;
 			case 2:
-				cout << "2" << endl;
-
 				hit.x = hit.x - 1;
 				time_look_around++;
 				break;
 			case 3:
-				cout << "3" << endl;
-
 				hit.x = hit.x + 1;
 				time_look_around++;
 				break;
@@ -369,15 +358,15 @@ private:
 	int x_first_hit_ship = 0;
 	int y_first_hit_ship = 0;
 
-
 	bool did_check_other_side = false;
 
 	int time_try_to_find_direction = 0;
 
-
 	int time_look_around = 0;
 
 	int time_attack=0;
+
+	int time_try_hit = 0;
 
 	vector<int>ship_size;
 	vector<POINT>ship_point_list;

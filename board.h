@@ -59,8 +59,6 @@ public:
 					}
 				}
 		}
-		//show_board();//////////////////////////////test
-
 	}
 
 	bool set_ship(const int size, const bool is_horizontal, const int x, const int y)
@@ -71,9 +69,9 @@ public:
 		if (is_horizontal)
 		{
 			if (x + size > col)
-				return false;  // out of range
+				return false;
 
-			for (int i = 0; i < size; i++)//make shure the board is empty
+			for (int i = 0; i < size; i++)
 			{
 				if (board_data[x + i][y] == IS_SHIP)
 				{
@@ -87,7 +85,6 @@ public:
 				ship_count_index++;
 
 			}
-			//show_board();//////////////////////////////test
 			return true;
 		}
 		else
@@ -106,10 +103,8 @@ public:
 			{
 				board_data[x][y + i] = IS_SHIP;
 				ship_count_index++;
-				//cout << "ship index=" << ship_count_index << endl;///////////////////////test
 			}
 
-			show_board();//////////////////////////////test
 			return true;
 		}
 		return false;
@@ -215,7 +210,7 @@ public:
 		}
 	}
 
-	bool check_board(const int x,const int y)//const
+	bool check_board(const int x,const int y)const
 	{
 		if (x<0 || x>col || y<0 || y>row)
 		{

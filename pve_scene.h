@@ -64,7 +64,7 @@ public:
 
     void on_exit()
     {
-
+        delete this;
     }
 private:
     void draw_tip_text()

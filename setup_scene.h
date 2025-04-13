@@ -148,7 +148,7 @@ public:
 
 	void on_exit()
 	{
-
+		delete this;
 	}
 
 private:
