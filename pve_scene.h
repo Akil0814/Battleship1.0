@@ -49,6 +49,7 @@ public:
     {
         human_player->draw_player_board(false);
         computer_player->draw_player_board(true);
+        draw_tip_text();
     }
 
     void on_input(const ExMessage& msg)
@@ -65,6 +66,19 @@ public:
     {
 
     }
+private:
+    void draw_tip_text()
+    {
+        static TCHAR str1[32];
+        static TCHAR str2[32];
+
+        _stprintf_s(str1, _T("Players board"));
+        _stprintf_s(str2, _T("Computers board"));
+        settextcolor(RGB(0, 0, 0));
+        outtextxy(540, 520, str1);
+        outtextxy(20, 520, str2);
+    }
+
 private:
     HumanPlayer* human_player = nullptr;
     ComputerPlayer* computer_player = nullptr;

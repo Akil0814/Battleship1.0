@@ -39,6 +39,9 @@ public:
 				index_y = pos(gen);
 				is_horizontal = bin(gen);
 			}
+			ship_list[i]->set_index(index_x, index_y);
+			if(!is_horizontal)
+				ship_list[i]->rotate_ship();
 			board.show_board();
 		}
 	}

@@ -34,6 +34,7 @@ public:
         player2->draw_all_ship(false);
         player1->draw_player_board(true, false);
         player2->draw_player_board(false,false);
+        draw_tip_text();
     }
 
     void on_input(const ExMessage& msg)
@@ -46,7 +47,7 @@ public:
 
     void on_exit()
     {
-
+        delete player2;
     }
 
 private:
@@ -55,15 +56,13 @@ private:
         static TCHAR str1[32];
         static TCHAR str2[32];
 
-            _stprintf_s(str1, _T("Player 1 turn"));
-            _stprintf_s(str2, _T("Player 1 board"));
-
+        _stprintf_s(str1, _T("Player 1 board"));
+        if(HumanPlayer* human = dynamic_cast<HumanPlayer*>(player2))
+            _stprintf_s(str2, _T("Player 2 board"));
+        else
+            _stprintf_s(str2, _T("Computers board"));
         settextcolor(RGB(0, 0, 0));
         outtextxy(20, 520, str1);
         outtextxy(540, 520, str2);
     }
-
-
-private:
-
 };

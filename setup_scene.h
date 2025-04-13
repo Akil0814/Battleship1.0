@@ -36,7 +36,7 @@ public:
 
 
 		button_next.set_images(&Setup_next_Idle, &Setup_next_Hovered, &Setup_next_Pushed);
-		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, 550);
+		button_next.set_position(WINDOW_WIDTH - Setup_next_Idle.getwidth() - 10, 510);
 
 		initgraph(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setbkcolor(RGB(128, 128, 128));
