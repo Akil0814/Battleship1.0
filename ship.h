@@ -51,6 +51,12 @@ public:
 		putimage(region.left, region.top, current_img);
 	}
 
+	void draw_right()
+	{
+		putimage(region.left+550, region.top, current_img);
+	}
+	
+
 	void take_damage()
 	{
 		if (!is_ship_sink)

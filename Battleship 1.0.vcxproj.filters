@@ -68,5 +68,8 @@
     <ClInclude Include="human_player.h">
       <Filter>头文件\Player</Filter>
     </ClInclude>
+    <ClInclude Include="game_end_scene.h">
+      <Filter>头文件\Scene\Game Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

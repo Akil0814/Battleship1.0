@@ -7,6 +7,7 @@
 #include"scene.h"
 #include"menu_scene.h"
 #include"game_scene.h"
+#include"game_end_scene.h"
 #include"setup_scene.h"
 #include"local_pvp_scene.h"
 #include"pve_scene.h"
@@ -19,7 +20,6 @@
 #include"player.h"
 #include"computer_player.h"
 #include"human_player.h"
-
 
 ExMessage msg;
 
@@ -105,6 +105,7 @@ int main()
 	BeginBatchDraw();
 
 	menu_scene = new MenuScene();
+	game_end_scene = new GameEndScene();
 	player1 = new HumanPlayer();
 
 	scene_manager.set_current_scene(menu_scene);

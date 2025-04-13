@@ -29,6 +29,42 @@ public:
 		return false;
 	}
 
+	void draw_all_ship()
+	{
+		for (int i = 0; i < ship_list.size(); i++)
+		{
+			ship_list[i]->draw();
+		}
+	}
+
+	void draw_all_ship(bool is_left)
+	{
+		if (is_left)
+		{
+			for (int i = 0; i < ship_list.size(); i++)
+			{
+				ship_list[i]->draw();
+			}
+		}
+		else
+		{
+			for (int i = 0; i < ship_list.size(); i++)
+			{
+				ship_list[i]->draw_right();
+			}
+		}
+	}
+
+	void update_board(const int x, const int y)
+	{
+		board.update_board(x, y);
+	}
+
+	bool check_board_available(const int x, const int y)
+	{
+		return board.check_board(x, y);
+	}
+
 	int get_ship_count_index_on_board()const
 	{
 		return board.get_ship_count_index();
@@ -47,12 +83,43 @@ public:
 			board.draw_player_board_right();
 	}
 
+	void draw_player_board(bool is_left,bool cover_ship)
+	{
+		if (!cover_ship)
+		{
+			if (is_left)
+				board.draw_player_board_left_end();
+			else
+				board.draw_player_board_right_end();
+		}
+		else
+		{
+			if (is_left)
+				board.draw_player_board_left();
+			else
+				board.draw_player_board_right();
+		}
+
+	}
+
+
 	int check_pos_type(const int x, const int y)const
 	{
 		return board.get_board_type(x, y);
 	}
 
+	void delete_all_ship()
+	{
+		for (int i = 0; i < ship_list.size(); i++)
+		{
+			delete ship_list[i];
+		}
+
+		ship_list.clear();
+	}
+
 protected:
+	vector<Ship*>ship_list;
 	Board board;
 	
 	int num_of_ship = 5;

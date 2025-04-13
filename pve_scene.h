@@ -1,11 +1,10 @@
 #pragma once
 #include"game_scene.h"
 #include"player.h"
-#include"human_player.h"
 #include"computer_player.h"
 
 extern SceneManager scene_manager;
-extern Scene* menu_scene;
+extern Scene* game_end_scene;
 
 extern Player* player1;
 extern Player* player2;
@@ -36,13 +35,14 @@ public:
                     do
                     {
                         try_hit = computer_player->decide_attack_position();
-                    } while (!human_player->check_pos_can_hit(try_hit.x, try_hit.y));
+                    } while (!human_player->check_board_available(try_hit.x, try_hit.y));
                     computer_player->check_if_hit_target(human_player->check_pos_type(try_hit.x, try_hit.y));
+                    human_player->update_board(try_hit.x, try_hit.y);
                 }
             }
         }
         if (!computer_player->get_ship_count_index_on_board()|| !human_player->get_ship_count_index_on_board())
-            scene_manager.switch_to(SceneManager::SceneType::Menu);
+            scene_manager.switch_to(SceneManager::SceneType::Game_end);
     }
 
     void on_draw()
@@ -68,6 +68,4 @@ public:
 private:
     HumanPlayer* human_player = nullptr;
     ComputerPlayer* computer_player = nullptr;
-
-
 };

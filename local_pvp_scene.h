@@ -1,7 +1,6 @@
 #pragma once
 #include"game_scene.h"
 #include"player.h"
-#include"human_player.h"
 
 extern SceneManager scene_manager;
 extern Scene* menu_scene;
@@ -37,7 +36,7 @@ public:
             }
         }
         if(!current_human_player->get_ship_count_index_on_board())
-            scene_manager.switch_to(SceneManager::SceneType::Menu);
+            scene_manager.switch_to(SceneManager::SceneType::Game_end);
     }
 
     void on_draw()

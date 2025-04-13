@@ -31,14 +31,6 @@ public:
 		}
 	}
 
-	void draw_all_ship()
-	{
-		for (int i = 0; i < ship_list.size(); i++)
-		{
-			ship_list[i]->draw();
-		}
-	}
-
 	void rotate_current_ship()
 	{
 		if (current_ship->get_ship_pos_index_y() == 10)//will not rotate if ship is at default pos//test
@@ -103,19 +95,6 @@ public:
 	}
 
 private:
-
-	void delete_all_ship()
-	{
-		for (int i = 0; i < ship_list.size(); i++)
-		{
-			delete ship_list[i];
-		}
-
-		ship_list.clear();
-	}
-
-private:
-	vector<Ship*>ship_list;
 	Ship* current_ship = nullptr;
 
 	bool ship_is_moving = false;
