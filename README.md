@@ -72,6 +72,7 @@ Inherited from **`Player`**
 ### Board
 <details>
   <summary> Board class</summary>
+  
 #### Board Setup & Reset
 
 -   `set_board()`:
