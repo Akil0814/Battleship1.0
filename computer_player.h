@@ -99,7 +99,7 @@ public:
 	POINT decide_attack_position()
 	{
 		time_try_hit++;
-		cout << "time try hit=" <<time_try_hit<< endl;
+		cout << "time try hit=" <<time_try_hit<< endl;/////////////////////////////test
 		switch (current_strategy)
 		{
 		case Strategy::Random_hit:
