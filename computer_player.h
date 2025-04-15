@@ -341,11 +341,11 @@ private:
 
 private:
 
-	std::random_device rd;							// 随机数种子
-	std::mt19937 gen;							// 使用Mersenne Twister引擎
-	std::uniform_int_distribution<> pos;    // 区间 [0, 9] 的均匀整数分布
-	std::uniform_int_distribution<> bin;    // 区间 [0, 2] 的均匀整数分布
-	std::uniform_int_distribution<> attack_pos;// 区间 [0, 4] 的均匀整数分布
+	std::random_device rd;
+	std::mt19937 gen;
+	std::uniform_int_distribution<> pos;
+	std::uniform_int_distribution<> bin;
+	std::uniform_int_distribution<> attack_pos;
 
 private:
 	POINT hit = {0};
